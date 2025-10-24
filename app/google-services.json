@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "378976238391",
+    "project_id": "cookingmagic-209ba",
+    "storage_bucket": "cookingmagic-209ba.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378976238391:android:df61e11b88e256d35f38b2",
+        "android_client_info": {
+          "package_name": "com.example.cookingmagic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx0dd7ItDGEIMTc_WqtIUFGSGURvw5jdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

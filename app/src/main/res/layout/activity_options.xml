@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5E6CC"
+    tools:context=".Activities.OptionsActivity">
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/back"
+        android:contentDescription="Back"
+        app:tint="#FF8C00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- User's Initials Circle -->
+    <TextView
+        android:id="@+id/userInitialsText"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bottm_nav_back"
+        android:gravity="center"
+        android:text="JD"
+        android:textColor="#8B4513"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
+        tools:text="JD" />
+
+    <!-- Recipes Added Stat -->
+    <TextView
+        android:id="@+id/recipesAddedTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:text="Recipes Added: 0"
+        android:textColor="#8B4513"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/favoritesTextView"
+        app:layout_constraintTop_toBottomOf="@id/userInitialsText" />
+
+    <!-- Favorite Recipes Stat -->
+    <TextView
+        android:id="@+id/favoritesTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="Favorite Recipes: 0"
+        android:textColor="#8B4513"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/recipesAddedTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/userInitialsText" />
+
+    <!-- View Recipes Option -->
+    <TextView
+        android:id="@+id/viewRecipesOption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/options_background"
+        android:padding="16dp"
+        android:text="View Recipes"
+        android:textColor="#8B4513"
+        android:textSize="18sp"
+
+        app:drawableTint="#FF8C00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recipesAddedTextView" />
+
+    <!-- View Favorites Option -->
+    <TextView
+        android:id="@+id/viewFavoritesOption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/options_background"
+        android:padding="16dp"
+        android:text="View Favorites"
+        android:textColor="#8B4513"
+        android:textSize="18sp"
+
+        app:drawableTint="#FF8C00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewRecipesOption" />
+
+    <!-- Dark Mode Option -->
+    <TextView
+        android:id="@+id/darkModeOption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/options_background"
+        android:padding="16dp"
+        android:text="Online Recipe Search"
+        android:textColor="#8B4513"
+        android:textSize="18sp"
+
+        app:drawableTint="#FF8C00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewFavoritesOption" />
+
+    <!-- Language Settings Option -->
+    <TextView
+        android:id="@+id/languageSettingsOption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/options_background"
+        android:padding="16dp"
+        android:text="Language Settings"
+        android:textColor="#8B4513"
+        android:textSize="18sp"
+
+        app:drawableTint="#FF8C00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/darkModeOption" />
+
+    <!-- Log Out Option -->
+    <TextView
+        android:id="@+id/logOutOption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/options_background"
+        android:padding="16dp"
+        android:text="Log Out"
+        android:textColor="#8B4513"
+        android:textSize="18sp"
+
+        app:drawableTint="#FF8C00"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/languageSettingsOption" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
