@@ -1,6 +1,9 @@
 package com.example.cookingmagic.Activities
 
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -8,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.cookingmagic.Adapters.RecipeAdapter
 import com.example.cookingmagic.Dataclasses.Ingredient
 import com.example.cookingmagic.Dataclasses.Recipe
+import com.example.cookingmagic.Dataclasses.RecipeDatabaseHelper
 import com.example.cookingmagic.databinding.ActivityFavoriteRecipiesBinding
 import com.example.cookingmagic.R
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +22,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import android.widget.Toast
+import com.example.cookingmagic.Adapters.RecipeAdapter
 
 class FavoriteRecipies : AppCompatActivity() {
 
@@ -26,12 +30,15 @@ class FavoriteRecipies : AppCompatActivity() {
     private lateinit var recipeAdapter: RecipeAdapter
     private val auth = FirebaseAuth.getInstance()
     private val database = FirebaseDatabase.getInstance().reference
+    private lateinit var dbHelper: RecipeDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityFavoriteRecipiesBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        dbHelper = RecipeDatabaseHelper(this)
 
         // Update heading to "Favorite Recipes"
         binding.allRecipesTextView.text = "Favorite Recipes"
@@ -57,7 +64,7 @@ class FavoriteRecipies : AppCompatActivity() {
             adapter = recipeAdapter
         }
 
-        // Fetch favorite recipes from Firebase
+        // Fetch favorite recipes
         fetchFavoriteRecipes()
 
         // Setup Bottom Navigation
@@ -65,17 +72,14 @@ class FavoriteRecipies : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_home -> {
                     startActivity(Intent(this, HomeActivity::class.java))
-
                     true
                 }
                 R.id.nav_report -> {
                     startActivity(Intent(this, ViewRecipiesActivity::class.java))
-
                     true
                 }
                 R.id.nav_add -> {
                     startActivity(Intent(this, AddRecipieActivity::class.java))
-
                     true
                 }
                 R.id.nav_favorites -> {
@@ -84,7 +88,6 @@ class FavoriteRecipies : AppCompatActivity() {
                 }
                 R.id.nav_options -> {
                     startActivity(Intent(this, OptionsActivity::class.java))
-
                     true
                 }
                 else -> false
@@ -94,57 +97,87 @@ class FavoriteRecipies : AppCompatActivity() {
 
     private fun fetchFavoriteRecipes() {
         val userId = auth.currentUser?.uid ?: return
-        database.child("users").child(userId).child("favorites")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val favoriteRecipeIds = snapshot.children.mapNotNull { it.key }
-                    if (favoriteRecipeIds.isEmpty()) {
-                        updateUI(emptyList())
-                        return
+
+        // Check if online
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = cm.activeNetwork
+        val capabilities = cm.getNetworkCapabilities(network)
+        val isOnline = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+
+        if (isOnline) {
+            // Online: Fetch from Firebase
+            database.child("users").child(userId).child("favorites")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val favoriteRecipeIds = snapshot.children.mapNotNull { it.key }
+                        if (favoriteRecipeIds.isEmpty()) {
+                            updateUI(emptyList())
+                            return
+                        }
+
+                        // Fetch details for favorite recipes
+                        database.child("recipes").addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(recipesSnapshot: DataSnapshot) {
+                                val recipes = mutableListOf<Recipe>()
+                                for (recipeId in favoriteRecipeIds) {
+                                    val recipeSnapshot = recipesSnapshot.child(recipeId)
+                                    val name = recipeSnapshot.child("name").getValue(String::class.java)
+                                    if (name != null) {
+                                        val ingredients = mutableListOf<Ingredient>()
+                                        recipeSnapshot.child("ingredients").children.forEach { ingredientSnapshot ->
+                                            val ingredientId = ingredientSnapshot.key ?: ""
+                                            val ingredientName = ingredientSnapshot.child("name").getValue(String::class.java) ?: ""
+                                            val quantity = ingredientSnapshot.child("quantity").getValue(Double::class.java) ?: 0.0
+                                            val unitMeasure = ingredientSnapshot.child("unitMeasure").getValue(String::class.java) ?: ""
+                                            ingredients.add(
+                                                Ingredient(
+                                                    ingredientId = ingredientId,
+                                                    recipeId = recipeId,
+                                                    name = ingredientName,
+                                                    quantity = quantity,
+                                                    unitMeasure = unitMeasure
+                                                )
+                                            )
+                                        }
+                                        recipes.add(Recipe(recipeId, name, ingredients, true)) // Set favorite to true
+                                    }
+                                }
+                                updateUI(recipes)
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                Toast.makeText(this@FavoriteRecipies, "Failed to load favorite recipes: ${error.message}", Toast.LENGTH_SHORT).show()
+                                updateUI(emptyList())
+                            }
+                        })
                     }
 
-                    // Fetch details for favorite recipes
-                    database.child("recipes").addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(recipesSnapshot: DataSnapshot) {
-                            val recipes = mutableListOf<Recipe>()
-                            for (recipeId in favoriteRecipeIds) {
-                                val recipeSnapshot = recipesSnapshot.child(recipeId)
-                                val name = recipeSnapshot.child("name").getValue(String::class.java)
-                                if (name != null) {
-                                    val ingredients = mutableListOf<Ingredient>()
-                                    recipeSnapshot.child("ingredients").children.forEach { ingredientSnapshot ->
-                                        val ingredientId = ingredientSnapshot.key ?: ""
-                                        val ingredientName = ingredientSnapshot.child("name").getValue(String::class.java) ?: ""
-                                        val quantity = ingredientSnapshot.child("quantity").getValue(Double::class.java) ?: 0.0
-                                        val unitMeasure = ingredientSnapshot.child("unitMeasure").getValue(String::class.java) ?: ""
-                                        ingredients.add(
-                                            Ingredient(
-                                                ingredientId = ingredientId,
-                                                recipeId = recipeId,
-                                                name = ingredientName,
-                                                quantity = quantity,
-                                                unitMeasure = unitMeasure
-                                            )
-                                        )
-                                    }
-                                    recipes.add(Recipe(recipeId, name, ingredients,false))
-                                }
-                            }
-                            updateUI(recipes)
-                        }
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(this@FavoriteRecipies, "Failed to load favorites: ${error.message}", Toast.LENGTH_SHORT).show()
+                        fetchOfflineFavorites(userId)
+                    }
+                })
+        } else {
+            // Offline: Fetch from SQLite
+            fetchOfflineFavorites(userId)
+        }
+    }
 
-                        override fun onCancelled(error: DatabaseError) {
-                            Toast.makeText(this@FavoriteRecipies, "Failed to load favorite recipes: ${error.message}", Toast.LENGTH_SHORT).show()
-                            updateUI(emptyList())
-                        }
-                    })
-                }
+    private fun fetchOfflineFavorites(userId: String) {
+        val favoriteRecipeIds = dbHelper.getOfflineFavorites(userId)
+        if (favoriteRecipeIds.isEmpty()) {
+            updateUI(emptyList())
+            return
+        }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@FavoriteRecipies, "Failed to load favorites: ${error.message}", Toast.LENGTH_SHORT).show()
-                    updateUI(emptyList())
-                }
-            })
+        val recipes = mutableListOf<Recipe>()
+        for (recipeId in favoriteRecipeIds) {
+            val recipe = dbHelper.getRecipeById(recipeId)
+            if (recipe != null) {
+                recipes.add(recipe.copy(favorite = true))
+            }
+        }
+        updateUI(recipes)
     }
 
     private fun updateUI(recipes: List<Recipe>) {

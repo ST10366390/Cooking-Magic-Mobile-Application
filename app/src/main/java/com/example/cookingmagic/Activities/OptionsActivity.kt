@@ -1,8 +1,13 @@
 package com.example.cookingmagic.Activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -13,14 +18,21 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import android.widget.Toast
+import java.util.Locale
 
 class OptionsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOptionsBinding
     private val auth = FirebaseAuth.getInstance()
     private val database = FirebaseDatabase.getInstance().reference
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedPreferences = getSharedPreferences("settings", Context.MODE_PRIVATE)
+        val language = sharedPreferences.getString("language", "en") ?: "en"
+        setLocale(language)
+
         enableEdgeToEdge()
         binding = ActivityOptionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -76,11 +88,31 @@ class OptionsActivity : AppCompatActivity() {
             Toast.makeText(this, "Dark mode toggle coming soon!", Toast.LENGTH_SHORT).show()
         }
 
-        // Language Settings option click (placeholder)
+        // Language Settings option click
         binding.languageSettingsOption.setOnClickListener {
-            // TODO: Implement language settings navigation or dialog
+            val languages = arrayOf("English", "Afrikaans", "isiZulu")
+            val languageMap = mapOf("English" to "en", "Afrikaans" to "af", "isiZulu" to "zu")
+            val spinner = Spinner(this@OptionsActivity)
+            val adapter = ArrayAdapter(this@OptionsActivity, android.R.layout.simple_spinner_item, languages)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter
 
-            Toast.makeText(this, "Language settings coming soon!", Toast.LENGTH_SHORT).show()
+            val builder = AlertDialog.Builder(this@OptionsActivity)
+            builder.setTitle("Select Language")
+            builder.setView(spinner)
+            builder.setPositiveButton("OK") { dialog, _ ->
+                val selectedLanguage = spinner.selectedItem.toString()
+                val selectedLanguageCode = languageMap[selectedLanguage] ?: "en"
+                sharedPreferences.edit().putString("language", selectedLanguageCode).apply()
+                setLocale(selectedLanguageCode)
+                recreate()
+                dialog.dismiss()
+                startActivity(Intent(this, HomeActivity::class.java))
+            }
+            builder.setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            builder.show()
         }
 
         // Log Out option click
@@ -91,6 +123,14 @@ class OptionsActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+    }
+
+    private fun setLocale(languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 
     private fun extractInitials(fullName: String): String {

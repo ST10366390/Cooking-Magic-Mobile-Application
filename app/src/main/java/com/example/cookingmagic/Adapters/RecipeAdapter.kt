@@ -1,5 +1,8 @@
 package com.example.cookingmagic.Adapters
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cookingmagic.Dataclasses.Recipe
+import com.example.cookingmagic.Dataclasses.RecipeDatabaseHelper
 import com.example.cookingmagic.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -56,7 +60,7 @@ class RecipeAdapter(
                 favoriteIcon.setOnClickListener {
                     val isFavorite = favoriteIcon.isSelected
                     favoriteIcon.isSelected = !isFavorite
-                    updateFavoriteStatus(recipe.recipeId, !isFavorite, recipe.name)
+                    updateFavoriteStatus(recipe.recipeId, !isFavorite, recipe.name, itemView.context)
                 }
             } else {
                 favoriteIcon.isEnabled = false
@@ -67,23 +71,38 @@ class RecipeAdapter(
             }
         }
 
-        private fun updateFavoriteStatus(recipeId: String, isFavorite: Boolean, recipeName: String) {
+        private fun updateFavoriteStatus(recipeId: String, isFavorite: Boolean, recipeName: String, context: Context) {
             val userId = auth.currentUser?.uid ?: return
-            val favoriteRef = database.child("users").child(userId).child("favorites").child(recipeId)
-            if (isFavorite) {
-                favoriteRef.setValue(true).addOnSuccessListener {
-                    Toast.makeText(itemView.context, "Added $recipeName to favorites", Toast.LENGTH_SHORT).show()
-                }.addOnFailureListener {
-                    favoriteIcon.isSelected = false // Revert UI on failure
-                    Toast.makeText(itemView.context, "Failed to add $recipeName to favorites", Toast.LENGTH_SHORT).show()
+
+            // Check if online
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val network = cm.activeNetwork
+            val capabilities = cm.getNetworkCapabilities(network)
+            val isOnline = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+
+            if (isOnline) {
+                // Online: Save to Firebase
+                val favoriteRef = database.child("users").child(userId).child("favorites").child(recipeId)
+                if (isFavorite) {
+                    favoriteRef.setValue(true).addOnSuccessListener {
+                        Toast.makeText(context, "Added $recipeName to favorites", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener {
+                        favoriteIcon.isSelected = false // Revert UI on failure
+                        Toast.makeText(context, "Failed to add $recipeName to favorites", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    favoriteRef.removeValue().addOnSuccessListener {
+                        Toast.makeText(context, "Removed $recipeName from favorites", Toast.LENGTH_SHORT).show()
+                    }.addOnFailureListener {
+                        favoriteIcon.isSelected = true // Revert UI on failure
+                        Toast.makeText(context, "Failed to remove $recipeName from favorites", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } else {
-                favoriteRef.removeValue().addOnSuccessListener {
-                    Toast.makeText(itemView.context, "Removed $recipeName from favorites", Toast.LENGTH_SHORT).show()
-                }.addOnFailureListener {
-                    favoriteIcon.isSelected = true // Revert UI on failure
-                    Toast.makeText(itemView.context, "Failed to remove $recipeName from favorites", Toast.LENGTH_SHORT).show()
-                }
+                // Offline: Save to SQLite
+                val dbHelper = RecipeDatabaseHelper(context)
+                dbHelper.saveFavoriteOffline(userId, recipeId, isFavorite)
+                Toast.makeText(context, "Saved $recipeName to favorites offline", Toast.LENGTH_SHORT).show()
             }
         }
     }

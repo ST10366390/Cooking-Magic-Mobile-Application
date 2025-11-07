@@ -30,7 +30,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Healthy burgers"
+        android:text="@string/healthy_burgers"
         android:textColor="#8B4513"
         android:textSize="32sp"
         android:textStyle="bold"
@@ -63,27 +63,12 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Healthy Burger Tips:\n• Choose lean protein: Opt for ground turkey or 90% lean beef to reduce fat content.\n• Incorporate veggies: Mix grated zucchini or mushrooms into patties for moisture and nutrients.\n• Use whole-grain buns: Select whole-wheat or multigrain buns for added fiber.\n• Grill or bake: Cook patties on a grill or in the oven to minimize added oils.\n• Load with fresh toppings: Add lettuce, tomato, avocado, and onion for vitamins and flavor."
+        android:text="@string/healthy_burger_tips_n_choose_lean_protein_opt_for_ground_turkey_or_90_lean_beef_to_reduce_fat_content_n_incorporate_veggies_mix_grated_zucchini_or_mushrooms_into_patties_for_moisture_and_nutrients_n_use_whole_grain_buns_select_whole_wheat_or_multigrain_buns_for_added_fiber_n_grill_or_bake_cook_patties_on_a_grill_or_in_the_oven_to_minimize_added_oils_n_load_with_fresh_toppings_add_lettuce_tomato_avocado_and_onion_for_vitamins_and_flavor"
         android:textColor="#8B4513"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tipImageView" />
     <!-- Tip Description -->
-    <TextView
-        android:id="@+id/tipDescriptionTextView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Discover hacks to make baking easier and more fun."
-        android:textColor="#8B4513"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bakingHacksTextView"
-        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Umdlalo Wokupheka</string>
+    <string name="add_new_recipe">Nezela Iresiphi Entsha</string>
+    <string name="recipe_name">Igama Leresiphi</string>
+    <string name="ingredients">Izithako</string>
+    <string name="ingredient_name">Igama Lesithako</string>
+    <string name="unit_e_g_cups">Iyunithi (isb. izinkomishi)</string>
+    <string name="add_ingredient">Nezela Isithako</string>
+    <string name="done">Kwenziwe</string>
+    <string name="quantity">Ubuningi</string>
+    <string name="all_recipes">Zonke Izindlela Zokupheka</string>
+    <string name="welcome_user">Siyakwamukela, Msebenzisi!</string>
+    <string name="search_recipes">Sesha Izindlela Zokupheka</string>
+    <string name="latest_cooking_tips">Amathiphu Akamuva Okupheka</string>
+    <string name="explore_recipes">Hlola Izindlela Zokupheka</string>
+    <string name="no_recipes_available">Azikho izindlela zokupheka ezitholakalayo</string>
+    <string name="view_recipes">Buka Izindlela Zokupheka</string>
+    <string name="view_favorites">Buka Okuthandwayo</string>
+    <string name="online_recipe_search">Ukusesha Izindlela Zokupheka Ku-inthanethi</string>
+    <string name="language_settings">Izilungiselelo Zolimi</string>
+    <string name="log_out">Phuma</string>
+    <string name="search_recipes_e_g_chicken_pap">Sesha izindlela zokupheka (isb. inkukhu, uphuthu)</string>
+    <string name="search">Sesha</string>
+
+    <string name="pap_cooking_tips_n_use_the_right_ratio_combine_1_part_maize_meal_with_3_parts_water_for_smooth_pap_n_boil_water_first_bring_water_to_a_boil_before_gradually_adding_maize_meal_n_stir_constantly_whisk_while_adding_maize_meal_to_prevent_lumps_n_simmer_on_low_cook_on_low_heat_for_20_30_minutes_stirring_occasionally_n_add_flavor_mix_in_a_pinch_of_salt_or_a_pat_of_butter_for_enhanced_taste">
+    Amathiphu Okupheka Uphuthu:\n• Sebenzisa isilinganiso esifanele: Hlanganisa ingxenye eyodwa yomgqomo wempuphu yezimbeleko nezengxenye ezintathu zamanzi ukuze uthole uphuthu othambile.\n• Bilisa amanzi kuqala: Bilisa amanzi ngaphambi kokufaka impuphu kancane kancane.\n• Hlanganisa njalo: Xuba ngenkathi ufaka impuphu ukuze ugweme amahlule.\n• Pheka kancane: Pheka ngomlilo ophansi imizuzu engu-20 kuya kwengu-30, uvuse ngezikhathi.\n• Ngeza ukunambitheka: Faka usawoti omncane noma ibhotela ukuze uthuthukise ukunambitheka.
+    </string>
+
+    <string name="daily_african_meals">Izidlo Zansuku Zonke Zase-Afrika</string>
+    <string name="healthy_living">Ukuphila Ngokunempilo</string>
+
+    <string name="healthy_salad_tips_n_start_with_greens_use_spinach_arugula_or_kale_as_a_nutrient_dense_base_n_add_lean_protein_include_grilled_chicken_tofu_chickpeas_or_salmon_for_satiety_n_include_healthy_fats_add_avocado_nuts_seeds_or_olive_oil_for_flavor_and_heart_health_n_vary_textures_mix_crunchy_veggies_cucumber_bell_pepper_with_soft_ones_tomato_avocado_n_dress_lightly_use_homemade_vinaigrettes_with_lemon_olive_oil_and_herbs_to_control_sodium_and_sugar">
+    Amathiphu Okupheka Isaladi Enempilo:\n• Qala ngezinto eziluhlaza: Sebenzisa isipinashi noma ikale njengezisekelo ezinempilo.\n• Faka amaprotheni alula: Faka inyama yenkukhu etshisiwe, i-tofu noma u-salmon.\n• Faka amafutha anempilo: Faka i-avocado, amantongomane noma uwoyela we-olive.\n• Hlanganisa izinhlobo ezahlukene: Xuba imifino eqinile (ikukhamba, ikhapisi) nezithambile (itamatisi, i-avocado).\n• Faka isidakamizwa esilula: Sebenzisa i-vinaigrette eyenziwe ekhaya ngelamula no-olive oil ukuze wehlise ushukela nosawoti.
+    </string>
+
+    <string name="quick_tips">Amathiphu Asheshayo</string>
+
+    <string name="tips_for_preparing_good_pastry_dishes_n_keep_ingredients_cold_chill_butter_and_water_to_ensure_a_flaky_pastry_texture_n_don_t_overwork_the_dough_mix_just_until_combined_to_avoid_tough_pastries_n_use_a_light_hand_with_flour_dust_lightly_to_prevent_sticking_without_altering_the_dough_s_consistency_n_rest_the_dough_refrigerate_for_at_least_30_minutes_to_relax_gluten_and_improve_texture_n_roll_evenly_use_consistent_pressure_and_a_cold_surface_for_uniform_thickness">
+    Amathiphu Okulungisa Amapastry Amahle:\n• Gcina izithako zibanda: Beka ibhotela namanzi efrijini ukuze uthole ipastry elithambile.\n• Ungawusebenzi kakhulu umgqomo: Xuba kancane ukuze ugweme ipastry eqinile.\n• Sebenzisa ufulawa kancane: Fafaza kancane ukuze ungashintshi ukuma komgqomo.\n• Phumisa umgqomo: Beka efrijini imizuzu engu-30 ukuze uphumule futhi uthambe.\n• Qengqa ngokulinganayo: Sebenzisa ingcindezi efanayo ukuze uthole ubukhulu obufanayo.
+    </string>
+
+    <string name="desert_tips">Amathiphu Eziphuzo Ezimnandi</string>
+
+    <string name="dessert_tips_n_balance_sweetness_taste_and_adjust_sugar_to_avoid_overly_sweet_desserts_n_use_fresh_ingredients_fresh_fruits_and_high_quality_chocolate_enhance_flavor_n_chill_dough_refrigerate_cookie_or_pastry_dough_for_better_texture_and_easier_handling_n_control_oven_temperature_bake_at_the_right_temperature_to_prevent_burning_or_undercooking_n_garnish_creatively_add_edible_flowers_nuts_or_a_dusting_of_powdered_sugar_for_appeal">
+    Amathiphu Ezidlo Ezimnandi:\n• Linganisa ubumnandi: Hlola ushukela futhi wehlise uma kudingeka.\n• Sebenzisa izithako ezintsha: Izithelo ezintsha noma ushokoledi osezingeni eliphezulu kuyathuthukisa ukunambitheka.\n• Beka umgqomo efrijini: Lokhu kuthuthukisa ukwakheka nokwenza kube lula ukusebenza.\n• Lawula izinga lokushisa lehhavini: Pheka kahle ukuze ungashi noma ungaphothuli.\n• Hlobisa ngobuciko: Faka izimbali ezidliwayo, amantongomane noma ushukela othuliwe ukuze kube muhle.
+    </string>
+
+    <string name="healthy_burgers">AmaBurger Anempilo</string>
+
+    <string name="healthy_burger_tips_n_choose_lean_protein_opt_for_ground_turkey_or_90_lean_beef_to_reduce_fat_content_n_incorporate_veggies_mix_grated_zucchini_or_mushrooms_into_patties_for_moisture_and_nutrients_n_use_whole_grain_buns_select_whole_wheat_or_multigrain_buns_for_added_fiber_n_grill_or_bake_cook_patties_on_a_grill_or_in_the_oven_to_minimize_added_oils_n_load_with_fresh_toppings_add_lettuce_tomato_avocado_and_onion_for_vitamins_and_flavor">
+    Amathiphu Wokwenza AmaBurger Anempilo:\n• Khetha inyama enama-protein alula: Sebenzisa inyama yenkukhu noma inyama yenkomo enosawoti omncane.\n• Faka imifino: Hlanganisa i-zucchini noma amakhowe aqoshiwe kumapatty.\n• Sebenzisa ama-bun enempilo: Khetha ama-bun e-wheat noma e-multigrain.\n• Tshisa noma pheka: Sebenzisa i-grill noma i-oveni ukuze wehlise uwoyela.\n• Faka izithako ezintsha: Faka letisi, itamatisi, i-avocado kanye ne-anyanisi ukuze kuthuthukise ukunambitheka.
+    </string>
+
+    <string name="all_recipes_new">Zonke Izindlela Zokupheka</string>
+    <string name="search_recipes_new">Sesha Izindlela Zokupheka</string>
+    <string name="flour">Ufulawa</string>
+    <string name="ingredients_new">Izithako</string>
+</resources>
